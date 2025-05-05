@@ -31,11 +31,6 @@ An Android application developed using **Jetpack Compose**, **Clean Architecture
 ## 📸 Screenshots
 
 > All screenshots are available in the `images` folder at the root of this repository.
-
-| Sign In Screen | Home Screen | Manga Detail | Face Detection |
-|:--------------:|:-----------:|:------------:|:---------------:|
-| ![Sign In](images/sign_in.png) | ![Home](images/home_screen.png) | ![Manga Detail](images/manga_detail.png) | ![Face Detection](images/face_detection.png) |
-
 ---
 
 ## 📽️ Demo Video
