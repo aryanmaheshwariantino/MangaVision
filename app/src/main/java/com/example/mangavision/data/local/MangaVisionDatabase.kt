@@ -20,9 +20,9 @@ abstract class MangaVisionDatabase : RoomDatabase() {
 
     companion object {
         val MIGRATION_1_2 = object : Migration(1, 2) {
-            override fun migrate(database: SupportSQLiteDatabase) {
+            override fun migrate(db: SupportSQLiteDatabase) {
                 // 1. Create new table with updated column names
-                database.execSQL("""
+                db.execSQL("""
                     CREATE TABLE IF NOT EXISTS manga_new (
                         id TEXT NOT NULL PRIMARY KEY,
                         title TEXT NOT NULL,
@@ -32,14 +32,14 @@ abstract class MangaVisionDatabase : RoomDatabase() {
                     )
                 """)
                 // 2. Copy data from old table to new table, mapping old columns to new ones
-                database.execSQL("""
+                db.execSQL("""
                     INSERT INTO manga_new (id, title, summary, thumb, lastUpdated)
                     SELECT id, title, description, coverurl, lastUpdated FROM manga
                 """)
                 // 3. Drop old table
-                database.execSQL("DROP TABLE manga")
+                db.execSQL("DROP TABLE manga")
                 // 4. Rename new table to original name
-                database.execSQL("ALTER TABLE manga_new RENAME TO manga")
+                db.execSQL("ALTER TABLE manga_new RENAME TO manga")
             }
         }
     }
