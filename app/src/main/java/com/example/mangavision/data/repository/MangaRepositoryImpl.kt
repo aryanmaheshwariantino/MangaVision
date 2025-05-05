@@ -38,16 +38,13 @@ class MangaRepositoryImpl @Inject constructor(
                 "nsfw" to nsfw,
                 "type" to type
             )
-            
             Logging.logApiRequest("getMangaList", params)
-            
             val response = api.getMangaList(
                 page = page,
                 genres = genres,
                 nsfw = nsfw,
                 type = type
             )
-            
             if (response.isSuccessful) {
                 val mangaListResponse = response.body()
                 val mangaList = mangaListResponse?.data?.map { apiManga ->
@@ -59,26 +56,36 @@ class MangaRepositoryImpl @Inject constructor(
                         lastUpdated = apiManga.lastUpdated
                     )
                 } ?: emptyList()
-                
+                // Save to DB for offline access
+                mangaDao.insertAll(mangaList.map { it.toEntity() })
                 Logging.logApiSuccess("getMangaList", "Retrieved ${mangaList.size} manga items (Page ${mangaListResponse?.page ?: 1} of ${mangaListResponse?.total ?: 0})")
                 emit(Resource.Success(mangaList))
             } else {
-                val errorBody = response.errorBody()?.string() ?: "No error body"
-                val errorMessage = "Failed to fetch manga list: ${response.code()}. Error: $errorBody"
+                val cached = mangaDao.getAllManga().map { it.toManga() }
+                if (cached.isNotEmpty()) {
+                    emit(Resource.Success(cached))
+                } else {
+                    val errorBody = response.errorBody()?.string() ?: "No error body"
+                    val errorMessage = "Failed to fetch manga list: ${response.code()}. Error: $errorBody"
+                    Logging.logApiError("getMangaList", errorMessage)
+                    emit(Resource.Error(errorMessage))
+                }
+            }
+        } catch (e: Exception) {
+            val cached = mangaDao.getAllManga().map { it.toManga() }
+            if (cached.isNotEmpty()) {
+                emit(Resource.Success(cached))
+            } else {
+                val errorMessage = "Error occurred: ${e.message ?: "Unknown error"}. Stack trace: ${e.stackTraceToString()}"
                 Logging.logApiError("getMangaList", errorMessage)
                 emit(Resource.Error(errorMessage))
             }
-        } catch (e: Exception) {
-            val errorMessage = "Error occurred: ${e.message ?: "Unknown error"}. Stack trace: ${e.stackTraceToString()}"
-            Logging.logApiError("getMangaList", errorMessage)
-            emit(Resource.Error(errorMessage))
         }
     }.flowOn(dispatcher)
 
     override fun getMangaDetails(mangaId: String): Flow<Resource<MangaDetails>> = flow {
         try {
             Logging.logApiRequest("getMangaDetails", mapOf("mangaId" to mangaId))
-            
             val response = api.getMangaDetails(mangaId)
             if (response.isSuccessful) {
                 val apiDetails = response.body()
@@ -117,6 +124,26 @@ class MangaRepositoryImpl @Inject constructor(
     }.flowOn(dispatcher)
 }
 
+private fun Manga.toEntity(): MangaEntity {
+    return MangaEntity(
+        id = this.id,
+        title = this.title,
+        summary = this.summary ?: "",
+        thumb = this.thumb ?: "",
+        lastUpdated = this.lastUpdated
+    )
+}
+
+private fun MangaEntity.toManga(): Manga {
+    return Manga(
+        id = this.id,
+        title = this.title,
+        thumb = this.thumb,
+        summary = this.summary,
+        lastUpdated = this.lastUpdated
+    )
+}
+
 // Extension functions for model mapping
 private fun MangaApiResponse.toManga(): Manga {
     return Manga(
@@ -152,15 +179,5 @@ private fun MangaApiResponse.toMangaEntity(): MangaEntity {
         summary = this.summary?:"",
         thumb = this.thumb?:"",
         lastUpdated = System.currentTimeMillis()
-    )
-}
-
-private fun MangaEntity.toManga(): Manga {
-    return Manga(
-        id = this.id,
-        title = this.title,
-        thumb = this.thumb,
-        summary = this.summary,
-        lastUpdated = this.lastUpdated
     )
 }
