@@ -56,7 +56,6 @@ class MangaRepositoryImpl @Inject constructor(
                         lastUpdated = apiManga.lastUpdated
                     )
                 } ?: emptyList()
-                // Save to DB for offline access
                 mangaDao.insertAll(mangaList.map { it.toEntity() })
                 Logging.logApiSuccess("getMangaList", "Retrieved ${mangaList.size} manga items (Page ${mangaListResponse?.page ?: 1} of ${mangaListResponse?.total ?: 0})")
                 emit(Resource.Success(mangaList))
