@@ -21,7 +21,7 @@ An Android application developed using **Jetpack Compose**, **Clean Architecture
 - Kotlin
 - Jetpack Compose
 - Room Database
-- Retrofit + Paging 3
+- Retrofit
 - MediaPipe Face Detection
 - Jetpack Navigation Component
 - MVVM + Clean Architecture
@@ -32,22 +32,20 @@ An Android application developed using **Jetpack Compose**, **Clean Architecture
 
 | Sign In Screen | Home Screen | Manga Detail | Face Detection |
 |:---:|:---:|:---:|:---:|
-| ![Sign In](screenshots/sign_in.png) | ![Home](screenshots/home_screen.png) | ![Manga Detail](screenshots/manga_detail.png) | ![Face Detection](screenshots/face_detection.png) |
-
-> 📝 Place all your images in a folder named `screenshots` inside the root of your repo.
+Available in images folder in the root folder of the application.
 
 ---
 
 ## 📽️ Demo Video
 
-▶️ [Click to Watch Demo](https://your-video-link.com)  
+▶️ [Click to Watch Demo]([https://your-video-link.com](https://drive.google.com/file/d/1XlKEBVyc336b1ViRKqjjOtBgksmczCuA/view?usp=drivesdk))  
 > You can upload your video to Google Drive or YouTube and paste the public link here.
 
 ---
 
 ## 📦 APK Download
 
-📥 [Download APK](https://your-apk-link.com)
+📥 [Download APK]([https://your-apk-link.com](https://drive.google.com/file/d/1XpFb7Avhz_p0nUF_UFNJN1JCP0Yxrt5X/view?usp=drivesdk))
 
 > Upload the APK to Google Drive or GitHub Releases and provide the public link here.
 
