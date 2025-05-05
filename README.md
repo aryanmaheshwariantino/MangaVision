@@ -1,18 +1,18 @@
 # 📱 Clean Architecture Manga App with Face Recognition
 
-An Android application developed using **Jetpack Compose**, **Clean Architecture**, and **MVVM**, featuring **Room DB authentication**, **Manga API data**, and **real-time face detection using ML-kit**.
+An Android application developed using **Jetpack Compose**, **Clean Architecture**, and **MVVM**, featuring **Room DB authentication**, **Manga API data**, and **real-time face detection using ML Kit**.
 
 ---
 
 ## 🚀 Features
 
-- 🔐 **User Authentication** with Room DB (Auto login support
+- 🔐 **User Authentication** with Room DB (Auto login support)
 - 📚 **Manga Listing Screen** with pagination & offline caching
 - 📄 **Manga Detail View** with full description
-- 👁️ **Face Recognition** with real-time detection and feedback (MediaPipe)
-- 🔄 **Offline Support** with automatic refresh when online
-- 🧭 **Single Activity Architecture** using Navigation Component
-- 💡 **Built with Jetpack Compose**
+- 👁️ **Face Recognition** with real-time detection and feedback (ML Kit)
+- 🔄 **Offline Support** with automatic cache refresh on connectivity
+- 🧭 **Single Activity Architecture** using Jetpack Navigation Component
+- 💡 **Modern UI built with Jetpack Compose**
 
 ---
 
@@ -22,7 +22,7 @@ An Android application developed using **Jetpack Compose**, **Clean Architecture
 - Jetpack Compose
 - Room Database
 - Retrofit
-- ML-kit Face Detection
+- ML Kit Face Detection
 - Jetpack Navigation Component
 - MVVM + Clean Architecture
 
@@ -30,24 +30,23 @@ An Android application developed using **Jetpack Compose**, **Clean Architecture
 
 ## 📸 Screenshots
 
+> All screenshots are available in the `images` folder at the root of this repository.
+
 | Sign In Screen | Home Screen | Manga Detail | Face Detection |
-|:---:|:---:|:---:|:---:|
-Available in images folder in the root folder of the application.
+|:--------------:|:-----------:|:------------:|:---------------:|
+| ![Sign In](images/sign_in.png) | ![Home](images/home_screen.png) | ![Manga Detail](images/manga_detail.png) | ![Face Detection](images/face_detection.png) |
 
 ---
 
 ## 📽️ Demo Video
 
-▶️ [Click to Watch Demo]([https://your-video-link.com](https://drive.google.com/file/d/1XlKEBVyc336b1ViRKqjjOtBgksmczCuA/view?usp=drivesdk))  
-> You can upload your video to Google Drive or YouTube and paste the public link here.
+▶️ [Click to Watch Demo](https://drive.google.com/file/d/1XlKEBVyc336b1ViRKqjjOtBgksmczCuA/view?usp=drivesdk)
 
 ---
 
 ## 📦 APK Download
 
-📥 [Download APK]([https://your-apk-link.com](https://drive.google.com/file/d/1XpFb7Avhz_p0nUF_UFNJN1JCP0Yxrt5X/view?usp=drivesdk))
-
-> Upload the APK to Google Drive or GitHub Releases and provide the public link here.
+📥 [Download APK](https://drive.google.com/file/d/1XpFb7Avhz_p0nUF_UFNJN1JCP0Yxrt5X/view?usp=drivesdk)
 
 ---
 
