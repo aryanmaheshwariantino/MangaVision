@@ -1,12 +1,12 @@
 # 📱 Clean Architecture Manga App with Face Recognition
 
-An Android application developed using **Jetpack Compose**, **Clean Architecture**, and **MVVM**, featuring **Room DB authentication**, **Manga API data with caching**, and **real-time face detection using MediaPipe**.
+An Android application developed using **Jetpack Compose**, **Clean Architecture**, and **MVVM**, featuring **Room DB authentication**, **Manga API data**, and **real-time face detection using ML-kit**.
 
 ---
 
 ## 🚀 Features
 
-- 🔐 **User Authentication** with Room DB (Auto login support)
+- 🔐 **User Authentication** with Room DB (Auto login support
 - 📚 **Manga Listing Screen** with pagination & offline caching
 - 📄 **Manga Detail View** with full description
 - 👁️ **Face Recognition** with real-time detection and feedback (MediaPipe)
@@ -22,7 +22,7 @@ An Android application developed using **Jetpack Compose**, **Clean Architecture
 - Jetpack Compose
 - Room Database
 - Retrofit
-- MediaPipe Face Detection
+- ML-kit Face Detection
 - Jetpack Navigation Component
 - MVVM + Clean Architecture
 
