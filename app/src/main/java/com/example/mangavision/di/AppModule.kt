@@ -33,7 +33,9 @@ object AppModule {
             context,
             MangaVisionDatabase::class.java,
             "mangavision.db"
-        ).build()
+        )
+        .addMigrations(MangaVisionDatabase.MIGRATION_1_2)
+        .build()
     }
 
     @Provides
