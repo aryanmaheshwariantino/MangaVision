@@ -26,9 +26,7 @@ fun MangaVisionNavGraph(
     ) {
         composable("signin") {
             SignInScreen(
-                onSignIn = { email, password ->
-                    // Call your ViewModel's signIn
-                    // If successful, navigate:
+                onSignInSuccess = {
                     navController.navigate("home") {
                         popUpTo("signin") { inclusive = true }
                     }

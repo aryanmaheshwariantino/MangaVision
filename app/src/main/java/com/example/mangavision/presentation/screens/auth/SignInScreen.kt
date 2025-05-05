@@ -1,5 +1,31 @@
 package com.example.mangavision.presentation.screens.auth
 
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Button
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.mangavision.presentation.viewmodel.AuthViewModel
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
@@ -10,28 +36,20 @@ import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import com.example.mangavision.R
 
-@OptIn(ExperimentalMaterial3Api::class)
+// presentation/screens/auth/SignInScreen.kt
 @Composable
 fun SignInScreen(
-    onClose: () -> Unit = {},
-    onGoogleSignIn: () -> Unit = {},
-    onAppleSignIn: () -> Unit = {},
-    onSignIn: (String, String) -> Unit = { _, _ -> },
-    onForgotPassword: () -> Unit = {},
-    onSignUp: () -> Unit = {},
-    isLoading: Boolean = false
+    viewModel: AuthViewModel = hiltViewModel(),
+    onSignInSuccess: () -> Unit
 ) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
+    var isLoading by remember { mutableStateOf(false) }
     var passwordVisible by remember { mutableStateOf(false) }
     val isFormValid = email.isNotBlank() && password.isNotBlank()
 
@@ -57,9 +75,17 @@ fun SignInScreen(
                         .widthIn(min = 300.dp, max = 400.dp),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    Text("Zenithra", style = MaterialTheme.typography.titleLarge, color = Color.White)
+                    Text(
+                        "Zenithra",
+                        style = MaterialTheme.typography.titleLarge,
+                        color = Color.White
+                    )
                     Spacer(Modifier.height(8.dp))
-                    Text("Welcome back", style = MaterialTheme.typography.headlineSmall, color = Color.White)
+                    Text(
+                        "Welcome back",
+                        style = MaterialTheme.typography.headlineSmall,
+                        color = Color.White
+                    )
                     Spacer(Modifier.height(4.dp))
                     Text(
                         "Please enter your details to sign in",
@@ -73,7 +99,7 @@ fun SignInScreen(
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         IconButton(
-                            onClick = onGoogleSignIn,
+                            onClick = { },
                             modifier = Modifier
                                 .size(48.dp)
                                 .background(Color.White, shape = CircleShape)
@@ -86,7 +112,7 @@ fun SignInScreen(
                             )
                         }
                         IconButton(
-                            onClick = onAppleSignIn,
+                            onClick = { },
                             modifier = Modifier
                                 .size(48.dp)
                                 .background(Color.White, shape = CircleShape)
@@ -134,7 +160,8 @@ fun SignInScreen(
                         singleLine = true,
                         visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
                         trailingIcon = {
-                            val icon = if (passwordVisible) Icons.Default.VisibilityOff else Icons.Default.Visibility
+                            val icon =
+                                if (passwordVisible) Icons.Default.VisibilityOff else Icons.Default.Visibility
                             IconButton(onClick = { passwordVisible = !passwordVisible }) {
                                 Icon(icon, contentDescription = "Toggle password visibility")
                             }
@@ -156,7 +183,7 @@ fun SignInScreen(
                             .padding(top = 4.dp, bottom = 16.dp)
                     ) {
                         TextButton(
-                            onClick = onForgotPassword,
+                            onClick = { },
                             modifier = Modifier.align(Alignment.CenterEnd)
                         ) {
                             Text("Forgot password?", color = Color(0xFFB0B0B0))
@@ -164,7 +191,10 @@ fun SignInScreen(
                     }
 
                     Button(
-                        onClick = { onSignIn(email, password) },
+                        onClick = {
+                            viewModel.signIn(email, password)
+                            onSignInSuccess()
+                        },
                         enabled = isFormValid && !isLoading,
                         modifier = Modifier
                             .fillMaxWidth()
@@ -196,7 +226,7 @@ fun SignInScreen(
                             modifier = Modifier.align(Alignment.CenterVertically)
                         )
                         TextButton(
-                            onClick = onSignUp,
+                            onClick = { },
                             modifier = Modifier
                                 .padding(0.dp)
                                 .offset(x = (-8).dp) // Adjust if needed to remove any default padding
