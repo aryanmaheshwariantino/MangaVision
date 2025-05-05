@@ -20,11 +20,10 @@ class AuthRepositoryImpl @Inject constructor(
         return withContext(dispatcher) {
             try {
                 val existingUser = userDao.getUserByEmail(email)
-
                 if (existingUser == null) {
                     val newUser = UserEntity(
                         email = email,
-                        password = hashPassword(password), // Always hash passwords!
+                        password = hashPassword(password),
                         isLoggedIn = true
                     )
                     userDao.insertUser(newUser)
@@ -80,15 +79,11 @@ class AuthRepositoryImpl @Inject constructor(
         }
     }
 
-    // Password security utilities
     private fun hashPassword(password: String): String {
-        // In a real app, use proper hashing like BCrypt
-        // This is just a placeholder - NEVER use this in production!
         return password.hashCode().toString()
     }
 
     private fun verifyPassword(inputPassword: String, hashedPassword: String): Boolean {
-        // In a real app, use proper password verification
         return hashPassword(inputPassword) == hashedPassword
     }
 }
